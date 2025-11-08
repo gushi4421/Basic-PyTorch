@@ -1,5 +1,6 @@
 """
-演示张量的基本运算
+案例:
+    演示张量的基本运算
 
 涉及到的API:
     add(),sub(),mul(),div(),neg()   ->对应 加,减,乘,除,取反     add,substract,multiply,divide

@@ -1,5 +1,6 @@
 """
-演示PyTorch中如何创建 线性 和 随机张量
+案例:
+    演示PyTorch中如何创建 线性 和 随机张量
 
 涉及到的函数：
 torch.arange() 和 torch.linspace() 创建张量
@@ -19,7 +20,7 @@ import torch
 # 1. 定义函数，演示：创建线性张量
 def demo01():
     # 场景1：创建指定范围的 线性张量
-    t1 = torch.arange(0, 12, 2) # 0 2 4 6 8 10
+    t1 = torch.arange(0, 12, 2)  # 0 2 4 6 8 10
     print(f"t1:{t1},type:{type(t1)}")
     print("-" * 30)
 
