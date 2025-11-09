@@ -30,9 +30,9 @@ def demo01():
     # 1. 创建1个线性层,输入维度设置为5,输出维度设置为3
     linear = torch.nn.Linear(5, 3)
     # 2. 对权重(w)进行随机初始化,从0-1均匀分布产生参数
-    torch.nn.init.uniform(linear.weight)
+    torch.nn.init.uniform_(linear.weight)
     # 3. 对偏置(b)进行随机初始化,从0-1均匀分布产生参数
-    torch.nn.init.uniform(linear.bias)
+    torch.nn.init.uniform_(linear.bias)
     # 4. 打印生成结果
     print(linear.weight.data)
     print(linear.bias.data)
@@ -97,10 +97,10 @@ def demo06():
 
     # 2. 对权重(w)进行kaiming初始化
     # 2.1 kaiming正态分布初始化
-    # torch.nn.init.kaiming_uniform_(linear.weight)
+    # torch.nn.init.kaiming_normal_(linear.weight)
 
     # 2.2 kaiming均匀分布初始化
-    torch.nn.init.kaiming_normal_(linear.weight)
+    torch.nn.init.kaiming_uniform_(linear.weight)
 
     # 3. 打印生成结果
     print(linear.weight.data)
@@ -113,10 +113,10 @@ def demo07():
 
     # 2. 对权重(w)进行xavier初始化
     # 2.1 xavier正态分布初始化
-    # torch.nn.init.xavier_uniform_(linear.weight)
+    # torch.nn.init.xavier_normal_(linear.weight)
 
     # 2.2 xavier均匀分布初始化
-    torch.nn.init.xavier_normal_(linear.weight)
+    torch.nn.init.xavier_uniform_(linear.weight)
 
     # 3. 打印生成结果
     print(linear.weight.data)

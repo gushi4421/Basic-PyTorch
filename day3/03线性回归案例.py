@@ -14,7 +14,8 @@
     torch.nn.MSELoss : MSE损失函数
     torch.optim.SGD : SGD优化器
 
-安装 matplotlib : pip install -U scikit-learn
+安装 matplotlib: pip install matplotlib
+安装 scikit-learn: pip install scikit-learn
 numpy对象->张量Tensor->数据集对象TensorDataset->数据加载器DataLoader
 """
 
@@ -34,15 +35,15 @@ def dataset():
         n_samples=100,  # 100个样本点
         n_features=1,  # 1个特征点
         noise=10,  # 噪声,噪声越大,样本点越散
-        coef=True,  # 是否返回系数,默认为False,返回值为None
+        coef=True,  # 是否返回系数
         bias=14.5,  # 偏置
-        random_state=1,  # 随机种子,随机种子相同，输出数据相同
+        random_state=1,  # 随机种子
     )
-    print(f"type:{type(x)}")  # numpy.ndarray
+    print(f"x type:{type(x)}, shape:{x.shape}")  # numpy.ndarray
 
     # 2. 把上述的数据,封装成张量对象
     x = torch.tensor(x, dtype=torch.float32)
-    y = torch.tensor(y, dtype=torch.float32)
+    y = torch.tensor(y, dtype=torch.float32).reshape(-1, 1)  # 重塑为列向量
 
     # 3. 返回结果
     return x, y, coef
@@ -50,87 +51,108 @@ def dataset():
 
 # 2 定义函数,表示模型训练
 def train(x, y, coef):
-    # 1. 创建数据集对象,把tensor -> 数据集对象 ->数据加载器
+    # 1. 创建数据集对象
     dataset = TensorDataset(x, y)
 
     # 2. 创建数据加载器对象
-    # 参1:数据集对象,参2:批次大小,参3:是否打乱数据(训练集打乱,测试机不打乱)
     dataloader = DataLoader(dataset, batch_size=16, shuffle=True)
 
     # 3. 创建初始的线性回归模型
-    model = torch.nn.Linear(1, 1)
+    model = torch.nn.Linear(1, 1)  # 输入1维，输出1维
 
-    # 4. 创建损失函数对象
+    # 4. 创建损失函数对象和优化器
     criterion = torch.nn.MSELoss()
-    # 5. 创建优化器对象
     optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 
-    # 6. 具体的训练过程
-    # 6.1 定义变量,分别表示:训练轮数,每轮的(平均)损失值,训练总损失值,训练的样本数
-    epochs, loss_list, total_loss, total_sample = 100, [], 0.0, 0
+    # 5. 训练过程
+    epochs = 100
+    loss_list = []
 
-    # 6.2 开始训练,按轮训练
+    print("开始训练...")
     for epoch in range(epochs):
-        # 6.3 每轮是分 批次 训练的,所以从 数据加载器中 获取 批次数据
-        for train_x, train_y in dataloader:  # 7批次(16,16,16,16,16,16,4)
-            # 6.3.1 模型预测
+        # 每轮开始时重置统计量
+        total_loss, total_sample = 0.0, 0
+
+        for train_x, train_y in dataloader:
+            # 前向传播
             y_pred = model(train_x)
 
-            # 6.3.2 计算(每轮的平均)损失值
-            loss = criterion(y_pred, train_y.reshape(-1, 1))  # -1 自动计算
-
-            # 6.3.3 计算总损失 和 样本批次数
+            # 计算损失
+            loss = criterion(y_pred, train_y)
             total_loss += loss.item()
             total_sample += 1
 
-            # 6.3.4 梯度清零,反向传播,梯度更新
+            # 反向传播
             optimizer.zero_grad()  # 梯度清零
-            loss.backward()  # 反向传播,计算梯度
+            loss.backward()  # 反向传播
             optimizer.step()  # 梯度更新
 
-        # 6.4 把本轮的(平均)损失值,添加到列表中
-        loss_list.append(total_loss / total_sample)
-        print(f"轮数:{epoch+1},平均损失:{total_loss/total_sample}")
+        # 记录本轮平均损失
+        avg_loss = total_loss / total_sample
+        loss_list.append(avg_loss)
 
-    # 7. 打印最终的训练结果
-    print(f"{epoch+1}轮的平均损失为:{total_loss/total_sample}")
-    print(f"模型参数,权重:{model.weight},偏置：{model.bias}")
+        if (epoch + 1) % 20 == 0:
+            print(f"轮数:{epoch+1}, 平均损失:{avg_loss:.4f}")
 
-    # 8. 绘制损失函数
+    # 6. 打印最终训练结果
+    print(f"\n训练完成!")
+    print(f"最终平均损失:{avg_loss:.4f}")
+    print(f"模型参数 - 权重:{model.weight.item():.4f}, 偏置:{model.bias.item():.4f}")
+    print(f"真实参数 - 权重:{coef:.4f}, 偏置:14.5")
+
+    # 7. 绘制损失函数曲线
+    plt.figure(figsize=(12, 4))
+
+    plt.subplot(1, 2, 1)
     plt.plot(range(epochs), loss_list)
     plt.title("损失值曲线变化图")
-    plt.grid()  # 绘制网格线
-    plt.show()
+    plt.xlabel("训练轮数")
+    plt.ylabel("损失值")
+    plt.grid(True)
 
-    # 9. 绘制预测值和真实值的关系
-    # 9.1 绘制样本点分布情况
-    plt.scatter(x, y)
-    plt.show()
+    # 8. 绘制预测结果
+    plt.subplot(1, 2, 2)
+    # 绘制样本点
+    plt.scatter(x.detach().numpy(), y.detach().numpy(), alpha=0.6, label="样本点")
 
-    # 9.2 绘制训练模型的预测值
-    # x: 100哥样本点的特征
-    y_pred = torch.tensor(data=[v * model.weight + model.bias for v in x])
+    # 绘制预测线
+    with torch.no_grad():
+        y_pred = model(x)
+        plt.plot(
+            x.detach().numpy(),
+            y_pred.detach().numpy(),
+            color="red",
+            linewidth=2,
+            label="预测线",
+        )
 
-    # 9.3 计算真实值
-    y_true = torch.tensor(data=[v * coef + 14.5 for v in x])
+    # 绘制真实线（无噪声）
+    x_range = torch.linspace(x.min(), x.max(), 100)
+    y_true = x_range * coef + 14.5
+    plt.plot(
+        x_range.detach().numpy(),
+        y_true.detach().numpy(),
+        color="green",
+        linestyle="--",
+        label="真实线",
+    )
 
-    # 9.4 绘制 预测值 和 真实值的 折线图
-    plt.plot(x, y_pred, color="red", label="预测值")
-    plt.plot(x, y_true, color="green", label="真实值")
-
-    # 9.5 图例,网格
+    plt.title("线性回归拟合结果")
+    plt.xlabel("特征值")
+    plt.ylabel("目标值")
     plt.legend()
-    plt.grid()
+    plt.grid(True)
 
-    # 9.6 显示图像
+    plt.tight_layout()
     plt.show()
 
 
 # 3. 测试
 if __name__ == "__main__":
-    # 3.1 创建数据集
+    # 创建数据集
     x, y, coef = dataset()
-    # print(f"x:{x},y:{y},coef:{coef}")
+    print(f"数据集形状: x{x.shape}, y{y.shape}")
+    print(f"真实系数: 权重={coef:.4f}, 偏置=14.5")
 
-    # 3.2 模型训练
+    # 模型训练
     train(x, y, coef)

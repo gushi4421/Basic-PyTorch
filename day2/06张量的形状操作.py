@@ -47,9 +47,9 @@ def demo02():
 
     # 2. 在0维上,添加一个维度
     t2 = t1.unsqueeze(0)
-    print(f't2"{t2},shape:{t2.shape}')  # (1,2,3)
+    print(f"t2{t2},shape:{t2.shape}")  # (1,2,3)
 
-    # 3. 在1维上,减少一个维度
+    # 3. 在1维上,添加一个维度
     t3 = t1.unsqueeze(1)
     print(f"t3:{t3},shape:{t3.shape}")  # (2,1,3)
 
@@ -89,7 +89,7 @@ def demo03():
 def demo04():
     # 1. 定义张量
     t1 = torch.randint(1, 10, size=(2, 3))
-    print(f"t1:{t2},shape:{t1.shape}")
+    print(f"t1:{t1},shape:{t1.shape}")
 
     # 2. 判断张量是否连续,即:张量中的顺序和内存中存储顺序是否一致
     print(t1.is_contiguous())  # True

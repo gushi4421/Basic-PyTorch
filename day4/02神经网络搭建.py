@@ -15,7 +15,7 @@
 """
 
 import torch
-import torchsummary as summary
+from torchsummary import summary
 
 
 # 1. 搭建神经网络,即:自定义继承 nn.Module
@@ -83,7 +83,7 @@ def train():
     # 4. 计算 和 查看模型参数
     print("==============计算模型参数==============")
     # 参1:(神经网络)模型对象,参2:输入数据维度(5行3列)
-    summary(my_model, input_size=(5, 3))
+    summary(my_model, input_size=(3,))
 
     print("==============查看模型参数==============")
     for name, param in my_model.named_parameters():

@@ -25,7 +25,7 @@ print(f"t1:{t1},type:{type(t1)}")
 t2 = t1.detach()
 print(f"t2:{t2},type:{type(t2)}")
 
-# 4. 测试上述的t1 t2 是否共享一块空间
+# 4. 测试上述的t1 t2 是否共享内存   detach()后仍然共享内存
 t1.data[0] = 100
 print(f"t1:{t1},type:{type(t1)}")
 print(f"t2:{t2},type:{type(t2)}")

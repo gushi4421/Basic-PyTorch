@@ -23,6 +23,6 @@ print(f't2:{t2},(元素)类型:{t2.dtype},(张量)类型:{type(t2)}')   #int16
 print(t2.half())    #float16
 print(t2.float())   #float32    默认
 print(t2.double())  #float64
-print(t2.sort())    #int16
+print(t2.short())    #int16
 print(t2.int())     #int32
 print(t2.long())    #int64      默认

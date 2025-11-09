@@ -1,7 +1,7 @@
 """
 案例:
     演示张量的基本创建方式
-    
+
 张量 -> 存储同一类型元素的容器，且元素值必须是数值才可以
 张量的基本创建方式：
     torch.tensor    根据指定数据创建张量
@@ -35,7 +35,7 @@ def demo01():
     # 场景3：numpy nd数组->张量
     data = np.random.randint(0, 10, size=(2, 3))
     t3 = torch.tensor(data)
-    print(f"t3:{t2},type:{type(t3)}")
+    print(f"t3:{t3},type:{type(t3)}")
 
     # 场景4：尝试创建指定维度的张量
     # t4=torch.tensor(2,3)

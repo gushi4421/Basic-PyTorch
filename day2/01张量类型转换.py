@@ -43,7 +43,7 @@ def demo01():
 def demo02():
     # 1. 创建numpy数组
     n1 = np.array([1, 2, 3])
-    print(f"n1:{n1},type:{n1}")
+    print(f"n1:{n1},type:{type(n1)}")
 
     # 2. 将上述numpy数组转换成张量
     # t1=torch.from_numpy(n1).type(torch.float32)

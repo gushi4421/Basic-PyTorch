@@ -35,5 +35,5 @@ t7 = torch.stack([t1, t2], dim=1)  # (2,3)+(2,3)=(2,2,3)
 print(f"t7:{t7},shape:{t7.shape}")
 t8 = torch.stack([t1, t2], dim=2)  # (2,3)+(2,3)=(2,3,2)
 print(f"t8:{t8},shape:{t8.shape}")
-t9 = torch.stack([t1, t2], dim=3)  # (2,3)+(2,3)=(2,3,?,2)  报错
-print(f"t8:{t9},shape:{t9.shape}")
+# t9 = torch.stack([t1, t2], dim=3)  # (2,3)+(2,3)=(2,3,?,2)  报错
+# print(f"t8:{t9},shape:{t9.shape}")

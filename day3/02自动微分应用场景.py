@@ -14,7 +14,7 @@ import torch
 x = torch.ones(2, 5)
 print(f"x:{x}")
 
-# 2. 定义y, 表示:标签(真实值),假设:2行5列,全0矩阵
+# 2. 定义y, 表示:标签(真实值),假设:2行3列,全0矩阵
 y = torch.zeros(2, 3)
 print(f"y:{y}")
 

@@ -4,7 +4,7 @@
 
 涉及到的函数：
 torch.arange() 和 torch.linspace() 创建张量
-torch.random.initial_seed 和 torch.random.anual_seed() 随机种子设置
+torch.random.initial_seed 和 torch.random.manual_seed() 随机种子设置
 torch.rand/randn() 创建随机浮点类型张量
 torch.randint(low,high,size=()) 创建随机整数类型张量
 

@@ -6,13 +6,13 @@
     sum(),max(),min(),mean()                ->都有dim参数,0表示列,1表示行
     pow(),sqrt(),exp(),log(),log2(),log10() ->没有dim参数
 需要掌握的函数:
-    sum(),max(),min(),min()
+    sum(),max(),min()
 """
 
 import torch
 
 # 1. 定义张量,记录初值
-t1 = torch.tensor([1, 2, 3], [4, 5, 6])
+t1 = torch.tensor([[1, 2, 3], [4, 5, 6]], dtype=torch.float32)
 print(f"t1:{t1}")
 
 # 2. 演示 有dim参数的 函数
