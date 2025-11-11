@@ -148,7 +148,7 @@ def evaluate(test_dataset, input_dim, output_dim):
     test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
     # 4. 定义变量, 记录预测正确的样本个数
     correct = 0
-    # 5. 从数据加载器中,获取到每批次的数据
+    # 5. 从数据加载器中,获取到每批次的数据day6/01ANN案例_手机价格分类/ANN案例_手机价格分类.py
     for x, y in test_loader:
         # 5.1 切换模型状态 -> 测试数据
         model.eval()

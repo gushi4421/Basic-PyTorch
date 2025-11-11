@@ -38,12 +38,12 @@ def demo01():
 # 2. 定义函数: 加载图片
 def demo02():
     # 1. 读取图片
-    img1 = plt.imread("day6/02绘制图片/自拍.jpg")
+    img1 = plt.imread("day6/抱歉，用了你的照片.jpg")
     print(f"img1:{img1}")
     # 2. 保存图像
-    plt.imsave("day6/02绘制图片/自拍_copy.png", img1)
+    plt.imsave("day6/抱歉，用了你的照片_copy.png", img1)
     # 3. 展示图像
-    plt.imshow()
+    plt.imshow(img1)
     plt.show()
 
 
